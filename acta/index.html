@@ -353,6 +353,11 @@ section { padding-block: clamp(64px, 9vw, 120px); }
   .step::before { left: -30px; top: 4px; }
 }
 
+.now-bar { display: inline-flex; align-items: center; gap: 12px; justify-self: start; margin-top: 6px; padding: 10px 16px; border-radius: 999px; background: var(--surface-solid); border: 1px solid var(--line); font-size: .95rem; }
+.now-bar b { color: var(--heading); }
+.now-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 0 color-mix(in srgb, var(--lime) 60%, transparent); animation: nowPulse 2s ease-out infinite; flex: none; }
+@keyframes nowPulse { to { box-shadow: 0 0 0 10px transparent; } }
+
 /* frameworks */
 .fw { display: flex; flex-wrap: wrap; gap: 10px; }
 .fw span { padding: 10px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-solid); font-weight: 600; color: var(--heading); font-size: .95rem; }
@@ -699,6 +704,10 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
       <div class="sec-head reveal">
         <div class="eyebrow">Roadmap</div>
         <h2>Twelve months from kick-off to conference</h2>
+        <div class="now-bar" role="status">
+          <span class="now-dot"></span>
+          <span><b>Now:</b> Preparing the kick-off meeting in Ljubljana · <b>Next:</b> 27 Nov 2026</span>
+        </div>
       </div>
       <div class="tl">
         <div class="step reveal" style="--hue: var(--blue)">
