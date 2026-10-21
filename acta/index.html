@@ -338,11 +338,12 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 @media (max-width: 460px) { .partners { grid-template-columns: 1fr; } }
 
 /* timeline */
-.tl { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; }
+.tl { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; }
 .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 13px; height: 2px; background: var(--grad); opacity: .5; border-radius: 2px; }
 .step { position: relative; display: grid; gap: 8px; padding-top: 38px; min-width: 0; }
 .step::before { content: ""; position: absolute; top: 6px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--hue); }
 .alt .step::before { background: var(--bg-2); }
+.alt .tl .step.done::before, .tl .step.done::before { background: var(--hue); }
 .step time { font-family: var(--f-mono); font-size: .8rem; color: var(--hue); letter-spacing: .06em; }
 .step h3 { font-size: 1.04rem; }
 .step p { font-size: .9rem; color: var(--fg-soft); line-height: 1.5; }
@@ -710,6 +711,11 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
         </div>
       </div>
       <div class="tl">
+        <div class="step reveal done" style="--hue: var(--navy)">
+          <time>19 OCT 2026 ✓</time>
+          <h3>Pre-kick-off call</h3>
+          <p>First online meeting of all partners: getting to know each other, partner agreements and the road to Ljubljana.</p>
+        </div>
         <div class="step reveal" style="--hue: var(--blue)">
           <time>27 NOV 2026</time>
           <h3>Kick-off</h3>
