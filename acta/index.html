@@ -359,6 +359,10 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 .now-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 0 color-mix(in srgb, var(--lime) 60%, transparent); animation: nowPulse 2s ease-out infinite; flex: none; }
 @keyframes nowPulse { to { box-shadow: 0 0 0 10px transparent; } }
 
+.deadlines { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; max-width: 640px; }
+.deadlines li { display: grid; grid-template-columns: 8.5em 1fr; gap: 12px; align-items: baseline; font-size: .95rem; }
+.deadlines time { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .06em; color: var(--teal); }
+
 /* frameworks */
 .fw { display: flex; flex-wrap: wrap; gap: 10px; }
 .fw span { padding: 10px 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-solid); font-weight: 600; color: var(--heading); font-size: .95rem; }
@@ -707,14 +711,20 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
         <h2>Twelve months from kick-off to conference</h2>
         <div class="now-bar" role="status">
           <span class="now-dot"></span>
-          <span><b>Now:</b> Preparing the kick-off meeting in Ljubljana · <b>Next:</b> 27 Nov 2026</span>
+          <span><b>Now:</b> Partner logos and signed partner agreements · <b>Next:</b> Kick-off in Ljubljana, 27 Nov 2026</span>
         </div>
+        <ul class="deadlines" aria-label="Upcoming deadlines">
+          <li><time>26 OCT</time><span>All partners upload their logos to the shared drive</span></li>
+          <li><time>01 NOV</time><span>Partner agreements signed by the LEAR, stamped and uploaded</span></li>
+          <li><time>BEFORE 27 NOV</time><span>SCV shares agenda and info pack for Ljubljana</span></li>
+          <li><time>27 NOV</time><span>Kick-off: improvement measures based on the NA feedback</span></li>
+        </ul>
       </div>
       <div class="tl">
         <div class="step reveal done" style="--hue: var(--navy)">
           <time>19 OCT 2026 ✓</time>
           <h3>Pre-kick-off call</h3>
-          <p>First online meeting of all partners: getting to know each other, partner agreements and the road to Ljubljana.</p>
+          <p>First online meeting of all partners: introductions, NA feedback and work plan, communication channels, logo and partner agreements. Kick-off date confirmed.</p>
         </div>
         <div class="step reveal" style="--hue: var(--blue)">
           <time>27 NOV 2026</time>
@@ -770,7 +780,7 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
       </svg>
       <b>Co-funded by<br>the European Union</b>
     </div>
-    <p class="disclaimer">Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the OeAD (Austria's Agency for Education and Internationalisation). Neither the European Union nor the granting authority can be held responsible for them.</p>
+    <p class="disclaimer">Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or OeAD-GmbH. Neither the European Union nor the granting authority can be held responsible for them.</p>
     <div class="foot-meta">
       <span>Project no. 2026-1-AT01-KA210-VET-000449326</span>
       <span>ACTA · Advancing Competencies of vocational Teachers in AI integration</span>
