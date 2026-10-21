@@ -1047,6 +1047,31 @@ function T(s) { return s; }
     items.forEach(function (el) { io.observe(el); });
   }
 
+
+  /* ---- keep the reading position when switching language ---- */
+  (function () {
+    var KEY = 'acta-lang-pos';
+    document.querySelectorAll('.langs a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var secs = document.querySelectorAll('main section[id]'), id = '', off = 0;
+        for (var i = 0; i < secs.length; i++) {
+          var r = secs[i].getBoundingClientRect();
+          if (r.top <= 120) { id = secs[i].id; off = r.top; }
+        }
+        try { sessionStorage.setItem(KEY, JSON.stringify({ id: id, off: off, y: window.scrollY })); } catch (e) {}
+      });
+    });
+    var pos = null;
+    try { pos = JSON.parse(sessionStorage.getItem(KEY) || 'null'); sessionStorage.removeItem(KEY); } catch (e) {}
+    if (!pos) return;
+    document.querySelectorAll('.reveal.pre').forEach(function (el) { el.classList.remove('pre'); });
+    var html = document.documentElement, sb = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    var el = pos.id && document.getElementById(pos.id);
+    window.scrollTo(0, el ? el.getBoundingClientRect().top + window.scrollY - pos.off : pos.y);
+    html.style.scrollBehavior = sb;
+  })();
+
   /* ---- scroll progress ---- */
   var prog = document.getElementById('progress');
   function onScroll() {
