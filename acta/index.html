@@ -5,8 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta property="og:title" content="ACTA – Erasmus+ Partnership">
 <meta property="og:description" content="Advancing Competencies of vocational Teachers in AI integration. Acta, non verba.">
-<meta property="og:image" content="assets/acta_logo.png">
+<meta property="og:image" content="https://htl1-klagenfurt.github.io/erasmus/acta/assets/acta_logo.png">
 <link rel="icon" href="assets/acta_logo.png">
+<link rel="alternate" hreflang="en" href="https://htl1-klagenfurt.github.io/erasmus/acta/">
+<link rel="alternate" hreflang="de" href="https://htl1-klagenfurt.github.io/erasmus/acta/de/">
+<link rel="alternate" hreflang="hr" href="https://htl1-klagenfurt.github.io/erasmus/acta/hr/">
+<link rel="alternate" hreflang="sl" href="https://htl1-klagenfurt.github.io/erasmus/acta/sl/">
+<link rel="alternate" hreflang="x-default" href="https://htl1-klagenfurt.github.io/erasmus/acta/">
 <title>ACTA – Erasmus+ Partnership</title>
 <meta name="description" content="ACTA – Advancing Competencies of vocational Teachers in AI integration. Erasmus+ small-scale partnership of HTL1 Klagenfurt, Šolski center Velenje, Obrtna tehnička škola Split and Xwhy Impact.">
 <link rel="stylesheet" href="assets/fonts.css">
@@ -123,6 +128,10 @@ a { color: inherit; }
 .bar nav { display: flex; gap: 22px; font-size: .92rem; }
 .bar nav a { text-decoration: none; color: var(--fg-soft); transition: color .2s; }
 .bar nav a:hover { color: var(--heading); }
+.langs { display: flex; gap: 2px; font-family: var(--f-mono); font-size: .76rem; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--surface); }
+.langs a { text-decoration: none; color: var(--fg-soft); padding: 4px 8px; border-radius: 999px; letter-spacing: .04em; }
+.langs a:hover { color: var(--heading); }
+.langs a[aria-current] { background: var(--grad); color: #fff; }
 .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--grad); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); }
 @media (max-width: 720px) { .bar nav { display: none; } }
 
@@ -433,6 +442,9 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
       <a href="#partners">Partners</a>
       <a href="#timeline">Timeline</a>
     </nav>
+    <div class="langs" role="navigation" aria-label="Language">
+      <a href="./" hreflang="en" data-l="en" aria-current="page">EN</a><a href="de/" hreflang="de" data-l="de">DE</a><a href="hr/" hreflang="hr" data-l="hr">HR</a><a href="sl/" hreflang="sl" data-l="sl">SL</a>
+    </div>
     <div class="progress" id="progress"></div>
   </div>
 </header>
@@ -873,31 +885,32 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
 </footer>
 
 <script>
+function T(s) { return s; }
 (function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- modules ---- */
   var mods = [
-    ['Fundamentals of AIoT in VET classrooms', 'AI and IoT concepts tailored to vocational teaching, from theory to your own course-level use cases.'],
-    ['Co-designing an AI-augmented curriculum', 'Generative AI as a design partner for lesson plans, vocational scenarios and multimedia material.'],
-    ['Interactive AI classroom experiences', 'Live simulations, client role-plays and troubleshooting scenarios generated on the fly.'],
-    ['Authentic assessments for the AI era', 'Tasks where students use, critique and improve AI output, so judgement and process count.'],
-    ['Strategic student AI literacy', 'Modelling AI as a cognitive partner for research, documentation and design ideation.'],
-    ['Self-worth in the AI era', 'Helping students handle AI-related career anxiety and value craftsmanship, empathy and ethics.'],
-    ['Industry and SME strategy', 'Using AI to read labour-market and SME needs and turn them into authentic project briefs.'],
-    ['Revising existing courses with AI', 'Analysing feedback and results with AI to improve courses step by step.']
+    [T("Fundamentals of AIoT in VET classrooms"), T("AI and IoT concepts tailored to vocational teaching, from theory to your own course-level use cases.")],
+    [T("Co-designing an AI-augmented curriculum"), T("Generative AI as a design partner for lesson plans, vocational scenarios and multimedia material.")],
+    [T("Interactive AI classroom experiences"), T("Live simulations, client role-plays and troubleshooting scenarios generated on the fly.")],
+    [T("Authentic assessments for the AI era"), T("Tasks where students use, critique and improve AI output, so judgement and process count.")],
+    [T("Strategic student AI literacy"), T("Modelling AI as a cognitive partner for research, documentation and design ideation.")],
+    [T("Self-worth in the AI era"), T("Helping students handle AI-related career anxiety and value craftsmanship, empathy and ethics.")],
+    [T("Industry and SME strategy"), T("Using AI to read labour-market and SME needs and turn them into authentic project briefs.")],
+    [T("Revising existing courses with AI"), T("Analysing feedback and results with AI to improve courses step by step.")]
   ];
   // Stage per module: 0 planned · 1 writing · 2 peer review · 3 translation · 4 pilot · 5 published
   // Update these numbers as the toolkit grows.
   var stage = [0, 0, 0, 0, 0, 0, 0, 0];
-  var stageNames = ['Planned', 'Writing', 'Peer review', 'Translation', 'Classroom pilot', 'Published'];
+  var stageNames = [T("Planned"), T("Writing"), T("Peer review"), T("Translation"), T("Classroom pilot"), T("Published")];
   var hues = ['#1467c9', '#1a82d6', '#1cb4e2', '#1bb0c4', '#22a897', '#4bb46f', '#6cbe52', '#8cc63f'];
   var grid = document.getElementById('modGrid');
   mods.forEach(function (m, i) {
     var el = document.createElement('article');
     el.className = 'mod reveal';
     el.style.setProperty('--hue', hues[i]);
-    el.innerHTML = '<span class="dot"></span><span class="num">MODULE ' + (i + 1) + '</span><h3></h3><p></p>' +
+    el.innerHTML = '<span class="dot"></span><span class="num">' + T("MODULE") + ' ' + (i + 1) + '</span><h3></h3><p></p>' +
       '<div class="mstat"><span class="chip"></span><span class="pips">' + '<b></b>'.repeat(5) + '</span></div>';
     var st = stage[i] || 0;
     el.querySelector('.chip').textContent = stageNames[st];
@@ -917,8 +930,8 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
     var done = stage.filter(function (x) { return x === 5; }).length;
     document.getElementById('pbFill').style.width = Math.max(2, total / max * 100) + '%';
     document.getElementById('pbText').textContent = total === 0
-      ? 'Writing starts after the kick-off in December 2026'
-      : done + ' of 8 modules published · ' + Math.round(total / max * 100) + ' %';
+      ? T("Writing starts after the kick-off in December 2026")
+      : T("{done} of 8 modules published").replace('{done}', done) + ' · ' + Math.round(total / max * 100) + ' %';
   })();
 
   /* ---- EU stars ---- */
@@ -990,7 +1003,7 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
     var steps = Array.prototype.slice.call(tl.querySelectorAll('.step[data-date]'));
     var now = new Date();
     var lbl = document.getElementById('todayLbl');
-    lbl.textContent = 'Today · ' + now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    lbl.textContent = T("Today") + ' · ' + now.toLocaleDateString(document.documentElement.lang || 'en-GB', { day: 'numeric', month: 'short' });
     function place() {
       var vertical = getComputedStyle(tl).gridTemplateColumns.split(' ').length === 1;
       var box = tl.getBoundingClientRect();
