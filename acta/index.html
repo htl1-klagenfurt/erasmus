@@ -340,7 +340,14 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 /* timeline */
 .tl { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; }
 .tl::before { content: ""; position: absolute; left: 0; right: 0; top: 13px; height: 2px; background: var(--grad); opacity: .5; border-radius: 2px; }
-.step { position: relative; display: grid; gap: 8px; padding-top: 38px; min-width: 0; }
+.step { position: relative; display: grid; grid-template-rows: auto 2.5em auto; gap: 8px; padding-top: 38px; min-width: 0; align-content: start; }
+.step h3 { align-self: start; line-height: 1.2; }
+.tl { align-items: start; }
+.today { position: absolute; top: -14px; left: 0; z-index: 2; display: grid; justify-items: center; gap: 2px; transform: translateX(-50%); pointer-events: none; transition: left .8s cubic-bezier(.2, .7, .2, 1); }
+.today .lbl { order: -1; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--heading); background: var(--surface-solid); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px; white-space: nowrap; box-shadow: var(--shadow); }
+.today .tri { width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid var(--lime); filter: drop-shadow(0 0 6px color-mix(in srgb, var(--lime) 80%, transparent)); animation: todayBob 1.8s ease-in-out infinite; }
+@keyframes todayBob { 50% { transform: translateY(3px); } }
+.tl { margin-top: 34px; }
 .step::before { content: ""; position: absolute; top: 6px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--hue); }
 .alt .step::before { background: var(--bg-2); }
 .alt .tl .step.done::before, .tl .step.done::before { background: var(--hue); }
@@ -350,8 +357,11 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 @media (max-width: 900px) {
   .tl { grid-template-columns: 1fr; gap: 26px; padding-left: 30px; }
   .tl::before { left: 7px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(180deg, var(--blue), var(--cyan), var(--teal), var(--lime)); }
-  .step { padding-top: 0; }
+  .step { padding-top: 0; grid-template-rows: auto; }
   .step::before { left: -30px; top: 4px; }
+  .today { left: -2px !important; top: 0; transform: translateY(-50%) rotate(-90deg); transform-origin: center; }
+  .today .lbl { display: none; }
+  .tl { margin-top: 0; }
 }
 
 .now-bar { display: inline-flex; align-items: center; gap: 12px; justify-self: start; margin-top: 6px; padding: 10px 16px; border-radius: 999px; background: var(--surface-solid); border: 1px solid var(--line); font-size: .95rem; }
@@ -362,6 +372,32 @@ section { padding-block: clamp(64px, 9vw, 120px); }
 .deadlines { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; max-width: 640px; }
 .deadlines li { display: grid; grid-template-columns: 8.5em 1fr; gap: 12px; align-items: baseline; font-size: .95rem; }
 .deadlines time { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .06em; color: var(--teal); }
+
+/* news */
+.news { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.post { background: var(--surface-solid); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: grid; gap: 8px; align-content: start; position: relative; }
+.post time { font-family: var(--f-mono); font-size: .78rem; letter-spacing: .06em; color: var(--teal); text-transform: uppercase; }
+.post h3 { font-size: 1.1rem; }
+.post p { color: var(--fg-soft); font-size: .95rem; }
+.post.upcoming { border-style: dashed; border-color: color-mix(in srgb, var(--lime) 60%, transparent); }
+.post.upcoming time { color: var(--lime); }
+.post.upcoming::after { content: ""; position: absolute; top: 22px; right: 22px; width: 10px; height: 10px; border-radius: 50%; background: var(--lime); animation: nowPulse 2s ease-out infinite; }
+
+/* toolkit progress */
+.progress-box { background: var(--surface-solid); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin-bottom: 20px; display: grid; gap: 12px; }
+.pb-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; font-size: .95rem; }
+.pb-head b { color: var(--heading); }
+.pb-head span { color: var(--fg-soft); }
+.pb-bar { height: 10px; border-radius: 999px; background: color-mix(in srgb, var(--fg) 8%, transparent); overflow: hidden; }
+.pb-bar i { display: block; height: 100%; border-radius: inherit; background: var(--grad); transition: width 1.2s cubic-bezier(.2, .7, .2, 1); }
+.pb-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-family: var(--f-mono); font-size: .72rem; color: var(--fg-soft); counter-reset: st; }
+.pb-steps li::before { counter-increment: st; content: counter(st) " "; color: var(--teal); }
+.mstat { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.chip { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--fg-soft); }
+.pips { display: flex; gap: 4px; }
+.pips b { width: 14px; height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--fg) 12%, transparent); }
+.pips b.on { background: var(--hue); }
+.mod.published .chip { color: var(--hue); font-weight: 600; }
 
 /* frameworks */
 .fw { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -390,6 +426,7 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
   <div class="wrap">
     <a class="bar-brand" href="#top">ACTA <span>ERASMUS+ KA210-VET</span></a>
     <nav aria-label="Sections">
+      <a href="#news">News</a>
       <a href="#idea">Project</a>
       <a href="#need">Why</a>
       <a href="#modules">Modules</a>
@@ -423,6 +460,43 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
       <div class="logo-plate" id="plate">
         <img src="assets/acta_logo.png" alt="ACTA project logo: four connected figures forming an arc above the word ACTA" width="900" height="532">
         <div class="motto">action, not words</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">Project diary</div>
+        <h2>What's happening</h2>
+        <p>News from the partnership, newest first.</p>
+      </div>
+      <div class="news">
+        <article class="post upcoming reveal">
+          <time datetime="2026-11-27">27 Nov 2026 · upcoming</time>
+          <h3>Kick-off in Ljubljana</h3>
+          <p>All four partners meet in person for the first time. On the agenda: the work plan, the first module templates and how we respond to the feedback of the Austrian National Agency.</p>
+        </article>
+        <article class="post reveal">
+          <time datetime="2026-10-20">20 Oct 2026</time>
+          <h3>A first website and a logo vote</h3>
+          <p>The ACTA project website goes online as a first draft. At the same time the partners vote on the project logo, choosing from five concepts prepared by SCV.</p>
+        </article>
+        <article class="post reveal">
+          <time datetime="2026-10-19">19 Oct 2026</time>
+          <h3>Pre-kick-off: the partnership meets online</h3>
+          <p>Teachers and project managers from Klagenfurt, Velenje and Split and our partner Xwhy Impact met in a first video call. We introduced our organisations, went through the work plan and agreed on how we communicate. Next steps: partner logos, signed partner agreements and the kick-off in Ljubljana.</p>
+        </article>
+        <article class="post reveal">
+          <time datetime="2026-07-01">Summer 2026</time>
+          <h3>ACTA is approved</h3>
+          <p>The Austrian National Agency for Erasmus+ approves ACTA as a small-scale partnership in vocational education and training. The project runs from November 2026 to October 2027.</p>
+        </article>
+        <article class="post reveal">
+          <time datetime="2025-12-01">Dec 2025</time>
+          <h3>52 teachers tell us what they need</h3>
+          <p>A survey among vocational teachers in Austria, Slovenia and Croatia shows a clear picture: high expectations of AI, but a lack of ready-to-use tools, lesson plans and practical training. These answers became the basis for the eight ACTA modules.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -537,6 +611,13 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
         <div class="eyebrow">The ACTA Toolkit</div>
         <h2>Eight modules, from first steps to course redesign</h2>
         <p>Each module becomes a 7–8 page booklet for EQF level 4 and 5 teaching: written in English, peer-reviewed by all partners, translated into German, Slovenian and Croatian, and piloted in real classrooms.</p>
+      </div>
+      <div class="progress-box reveal" aria-live="polite">
+        <div class="pb-head"><b>Toolkit progress</b><span id="pbText"></span></div>
+        <div class="pb-bar"><i id="pbFill"></i></div>
+        <ol class="pb-steps" aria-label="Stages of every module">
+          <li>Planned</li><li>Writing (EN)</li><li>Peer review</li><li>Translation</li><li>Classroom pilot</li><li>Published</li>
+        </ol>
       </div>
       <div class="modules" id="modGrid"></div>
       <p class="out-note reveal">
@@ -720,33 +801,34 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
           <li><time>27 NOV</time><span>Kick-off: improvement measures based on the NA feedback</span></li>
         </ul>
       </div>
-      <div class="tl">
-        <div class="step reveal done" style="--hue: var(--navy)">
+      <div class="tl" id="tl">
+        <div class="today" id="today" aria-hidden="true"><span class="tri"></span><span class="lbl" id="todayLbl">Today</span></div>
+        <div data-date="2026-10-19" class="step reveal done" style="--hue: var(--navy)">
           <time>19 OCT 2026 ✓</time>
           <h3>Pre-kick-off call</h3>
           <p>First online meeting of all partners: introductions, NA feedback and work plan, communication channels, logo and partner agreements. Kick-off date confirmed.</p>
         </div>
-        <div class="step reveal" style="--hue: var(--blue)">
+        <div data-date="2026-11-27" class="step reveal" style="--hue: var(--blue)">
           <time>27 NOV 2026</time>
           <h3>Kick-off</h3>
           <p>First transnational partner meeting in Ljubljana, Slovenia, hosted by Šolski center Velenje.</p>
         </div>
-        <div class="step reveal" style="--hue: var(--cyan)">
+        <div data-date="2027-01-31" class="step reveal" style="--hue: var(--cyan)">
           <time>DEC 2026 – MAR 2027</time>
           <h3>Writing the toolkit</h3>
           <p>Templates, eight modules in English, peer review across all partners.</p>
         </div>
-        <div class="step reveal" style="--hue: #19aec0">
+        <div data-date="2027-05-12" class="step reveal" style="--hue: #19aec0">
           <time>11–13 MAY 2027</time>
           <h3>Master Workshop</h3>
           <p>“Acta, non verba” in Split: three days, ten teachers, one shared method.</p>
         </div>
-        <div class="step reveal" style="--hue: var(--teal)">
+        <div data-date="2027-07-15" class="step reveal" style="--hue: var(--teal)">
           <time>APR – SEP 2027</time>
           <h3>Translate &amp; pilot</h3>
           <p>Cultural adaptation and classroom pilots at all three schools.</p>
         </div>
-        <div class="step reveal" style="--hue: var(--lime)">
+        <div data-date="2027-10-01" class="step reveal" style="--hue: var(--lime)">
           <time>SEP / OCT 2027</time>
           <h3>ACTA Connect Conference</h3>
           <p>Networking conference at HTL1 Klagenfurt with school heads, authorities and regional companies.</p>
@@ -804,13 +886,22 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
     ['Industry and SME strategy', 'Using AI to read labour-market and SME needs and turn them into authentic project briefs.'],
     ['Revising existing courses with AI', 'Analysing feedback and results with AI to improve courses step by step.']
   ];
+  // Stage per module: 0 planned · 1 writing · 2 peer review · 3 translation · 4 pilot · 5 published
+  // Update these numbers as the toolkit grows.
+  var stage = [0, 0, 0, 0, 0, 0, 0, 0];
+  var stageNames = ['Planned', 'Writing', 'Peer review', 'Translation', 'Classroom pilot', 'Published'];
   var hues = ['#1467c9', '#1a82d6', '#1cb4e2', '#1bb0c4', '#22a897', '#4bb46f', '#6cbe52', '#8cc63f'];
   var grid = document.getElementById('modGrid');
   mods.forEach(function (m, i) {
     var el = document.createElement('article');
     el.className = 'mod reveal';
     el.style.setProperty('--hue', hues[i]);
-    el.innerHTML = '<span class="dot"></span><span class="num">MODULE ' + (i + 1) + '</span><h3></h3><p></p>';
+    el.innerHTML = '<span class="dot"></span><span class="num">MODULE ' + (i + 1) + '</span><h3></h3><p></p>' +
+      '<div class="mstat"><span class="chip"></span><span class="pips">' + '<b></b>'.repeat(5) + '</span></div>';
+    var st = stage[i] || 0;
+    el.querySelector('.chip').textContent = stageNames[st];
+    el.querySelectorAll('.pips b').forEach(function (b, k) { if (k < st) b.classList.add('on'); });
+    if (st === 5) el.classList.add('published');
     el.querySelector('h3').textContent = m[0];
     el.querySelector('p').textContent = m[1];
     el.addEventListener('pointermove', function (e) {
@@ -820,6 +911,14 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
     });
     grid.appendChild(el);
   });
+  (function () {
+    var total = stage.reduce(function (a, b) { return a + b; }, 0), max = stage.length * 5;
+    var done = stage.filter(function (x) { return x === 5; }).length;
+    document.getElementById('pbFill').style.width = Math.max(2, total / max * 100) + '%';
+    document.getElementById('pbText').textContent = total === 0
+      ? 'Writing starts after the kick-off in December 2026'
+      : done + ' of 8 modules published · ' + Math.round(total / max * 100) + ' %';
+  })();
 
   /* ---- EU stars ---- */
   var g = document.getElementById('euStars');
@@ -880,6 +979,41 @@ footer .wrap { display: grid; grid-template-columns: auto 1fr; gap: 28px 40px; a
       if (!reduce) requestAnimationFrame(tick);
     }
     tick(t0);
+  })();
+
+
+  /* ---- today marker on the timeline ---- */
+  (function () {
+    var tl = document.getElementById('tl'), mark = document.getElementById('today');
+    if (!tl || !mark) return;
+    var steps = Array.prototype.slice.call(tl.querySelectorAll('.step[data-date]'));
+    var now = new Date();
+    var lbl = document.getElementById('todayLbl');
+    lbl.textContent = 'Today · ' + now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    function place() {
+      var vertical = getComputedStyle(tl).gridTemplateColumns.split(' ').length === 1;
+      var box = tl.getBoundingClientRect();
+      var pts = steps.map(function (st) {
+        var r = st.getBoundingClientRect();
+        return { t: new Date(st.dataset.date).getTime(), x: r.left - box.left + 8, y: r.top - box.top + 12 };
+      });
+      var t = now.getTime(), pos;
+      if (t <= pts[0].t) pos = pts[0];
+      else if (t >= pts[pts.length - 1].t) pos = pts[pts.length - 1];
+      else {
+        for (var i = 0; i < pts.length - 1; i++) {
+          if (t >= pts[i].t && t <= pts[i + 1].t) {
+            var f = (t - pts[i].t) / (pts[i + 1].t - pts[i].t);
+            pos = { x: pts[i].x + f * (pts[i + 1].x - pts[i].x), y: pts[i].y + f * (pts[i + 1].y - pts[i].y) };
+            break;
+          }
+        }
+      }
+      if (vertical) { mark.style.left = ''; mark.style.top = pos.y + 'px'; }
+      else { mark.style.top = ''; mark.style.left = pos.x + 'px'; }
+    }
+    place();
+    window.addEventListener('resize', place);
   })();
 
   /* ---- reveal on scroll (content stays readable at rest) ---- */
