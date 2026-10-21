@@ -931,7 +931,7 @@ function T(s) { return s; }
     document.getElementById('pbFill').style.width = Math.max(2, total / max * 100) + '%';
     document.getElementById('pbText').textContent = total === 0
       ? T("Pisanje počinje nakon početnog sastanka u prosincu 2026.")
-      : T("Objavljeno {done} od 8 modula").replace('{done}', done) + ' · ' + Math.round(total / max * 100) + ' %';
+      : T("Objavljenih modula: {done} od 8").replace('{done}', done) + ' · ' + Math.round(total / max * 100) + ' %';
   })();
 
   /* ---- EU stars ---- */
